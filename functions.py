@@ -4,11 +4,17 @@ from scipy.constants import g as grav_const
 
 
 def initial_conditions():
-    pos_x, pos_y = input("Enter comma-separated initial position: ").split(",")
-    vel_x, vel_y = input("Enter comma-separated initial velocity: ").split(",")
+    pos_x, pos_y = input("Enter comma-separated initial position [m]: ").split(",")
+    use_angle = input("Use launch angle? (y/n):  ").startswith('y')
+    if use_angle==True:
+        angle =  float(input("Enter launch angle (deg): ")) * (np.pi/180)
+        vel_mag = float(input("Magnitude of initial velocity [m/s]: "))
+        vel_x, vel_y = vel_mag*np.cos(angle), vel_mag*np.sin(angle)
+    else:
+        vel_x, vel_y = input("Enter comma-separated initial velocity [m/s]: ").split(",")
 
     C_d = float(input("Enter Drag Coefficient: "))
-    m = float(input("Enter mass: "))
+    m = float(input("Enter mass [kg]: "))
     dt = float(input("Enter time-step (s): "))
 
     pos_vec = {"pos_x":float(pos_x), "pos_y": float(pos_y)}
