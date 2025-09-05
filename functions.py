@@ -42,3 +42,10 @@ def update_pos(pos_vec,vel_vec,dt):
     pos_vec["pos_x"], pos_vec["pos_y"] = pos_vec["pos_x"] + vel_vec["vel_x"] * dt, pos_vec["pos_y"] + vel_vec["vel_y"] * dt
 
     return pos_vec
+
+def calculate_KE(vel_vec,m):
+    v_square = (vel_vec["vel_x"]**2 + vel_vec["vel_y"]**2)
+    return (1/2)*m*v_square
+
+def calculate_PE(pos_vec,m):
+    return m*grav_const*pos_vec["pos_y"]
