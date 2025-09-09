@@ -18,11 +18,10 @@ def initial_conditions():
 
     pos_vec = {"pos_x":float(pos_x), "pos_y": float(pos_y)}
     vel_vec = {"vel_x":float(vel_x), "vel_y": float(vel_y)}
-    force_vec = {"force_x": 0, "force_y": 0}
     
-    return force_vec, vel_vec, pos_vec, C_d, m, dt
+    return vel_vec, pos_vec, C_d, m, dt
 
-def update_force(force_vec,vel_vec,C_d,m):
+def update_force(vel_vec,C_d,m):
     drag_mag = C_d*(vel_vec["vel_x"]**2 + vel_vec["vel_y"]**2)
     grav_mag = m * grav_const
 
@@ -31,8 +30,7 @@ def update_force(force_vec,vel_vec,C_d,m):
     Fd_x = -drag_mag * np.cos(drag_angle)
     Fd_y = -drag_mag * np.sin(drag_angle)
     Fg_y = -grav_mag
-
-    force_vec["force_x"], force_vec["force_y"] = Fd_x, Fg_y + Fd_y
+    force_vec = {"force_x":float(Fd_x), "force_y":float(Fg_y + Fd_y)}
     
     return force_vec
 
@@ -54,3 +52,8 @@ def calculate_KE(vel_vec,m):
 
 def calculate_PE(pos_vec,m):
     return m*grav_const*pos_vec["pos_y"]
+
+def analytic_function(vel_y_init,vel_x_init,t,y_init,x_init):
+    y_pos = y_init + vel_y_init * np.array(t) - 1/2 * grav_const * np.array(t) **2
+    x_pos = x_init +  vel_x_init * np.array(t)
+    return x_pos,y_pos
